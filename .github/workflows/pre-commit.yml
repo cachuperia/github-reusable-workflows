@@ -1,0 +1,24 @@
+name: pre-commit
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: 'Python runtime version'
+        default: '3.8'
+        required: false
+        type: string
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    name: Check all files with pre-commit
+    timeout-minutes: 5
+    env:
+      SKIP: no-commit-to-branch
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python-version }}
+      - uses: pre-commit/action@v2.0.3
