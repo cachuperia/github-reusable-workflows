@@ -27,7 +27,6 @@ jobs:
   approve:
     if: ${{ success() }}
     needs:
-      - pytest
       - pre-commit
       - commitlint
     runs-on: ubuntu-latest
