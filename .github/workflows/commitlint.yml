@@ -2,15 +2,12 @@ name: commitlint
 
 on:
   workflow_call:
-    inputs:
-      workspace_path:
-        required: true
-        type: string
 
 jobs:
-  deploy:
-    timeout-minutes: 5
+  commitlint:
     runs-on: ubuntu-latest
+    name: Check PR commit messages with commitlint
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,4 +18,4 @@ jobs:
       - run: npm install commitlint-plugin-function-rules
       - uses: wagoid/commitlint-github-action@v3
         env:
-          NODE_PATH: ${{ inputs.workspace_path }}/node_modules
+          NODE_PATH: ${{ github.workspace }}/node_modules
