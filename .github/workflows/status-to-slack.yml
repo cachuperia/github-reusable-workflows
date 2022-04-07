@@ -1,0 +1,19 @@
+name: status-to-slack
+
+on:
+  workflow_call:
+    secrets:
+      slack-webhook:
+        description: 'Slack channel webhook'
+        required: false
+
+jobs:
+  send-workflow-status:
+    runs-on: ubuntu-latest
+    name: Post Workflow Status To Slack
+    timeout-minutes: 5
+    steps:
+      - uses: Gamesight/slack-workflow-status@master
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.slack-webhook}}
