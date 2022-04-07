@@ -4,6 +4,15 @@ on:
       - master
 
 jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    name: Check all files with pre-commit and update globally available pre-commit cache
+    env:
+      SKIP: no-commit-to-branch
+    steps:
+      - uses: actions/checkout@v2
+      - uses: pre-commit/action@v2.0.3
+
   release:
     runs-on: ubuntu-latest
     steps:
@@ -15,6 +24,7 @@ jobs:
       uses: relekang/python-semantic-release@master
       with:
         github_token: ${{ secrets.ORG_MACHINE_USER_TOKEN }}
+
   slack-workflow-status:
     if: ${{ failure() }}
     name: Post Workflow Status To Slack
