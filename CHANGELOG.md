@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-04-11)
+### Feature
+* Add pre-commit shared workflow for unit tests ([`be3da53`](https://github.com/agblox/github-reusable-workflows/commit/be3da53531a35bd21beb3004da737bf6c28da1df))
+* Add pre-commit shared workflow for terraform modules ([`fff4901`](https://github.com/agblox/github-reusable-workflows/commit/fff4901ba8f756f7e871937abfa30e931b6a0bad))
+
 ## v0.2.0 (2022-04-07)
 ### Feature
 * Add status-to-slack shared workflow ([`30f6538`](https://github.com/agblox/github-reusable-workflows/commit/30f65387477d27ab6fd9559fe13d3f6e4916d8e5))
