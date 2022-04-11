@@ -2,6 +2,24 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2022-04-11)
+### Feature
+* Add publish docker image workflow ([`89b0048`](https://github.com/agblox/github-reusable-workflows/commit/89b00488a557dd36bcbe1ab3808580fcb5cbbce9))
+* Move asdf to the main workflow ([`720ef61`](https://github.com/agblox/github-reusable-workflows/commit/720ef611d3e4fc704ebcbec3349eadce93a1bcb1))
+* Add integration tests step ([`1baccd8`](https://github.com/agblox/github-reusable-workflows/commit/1baccd888a053c4a24a5ffe8c03326c98dd87582))
+
+### Fix
+* Add Docker image build variables ([`d4c7c01`](https://github.com/agblox/github-reusable-workflows/commit/d4c7c015de8a083c799cb717e4eb0178da75f2c0))
+* Add SSH key to workflow secrets ([`82ed653`](https://github.com/agblox/github-reusable-workflows/commit/82ed653fd27cc110949439f0d3f4957d46107019))
+
+### Documentation
+* Clarify workflow name ([`c8a6491`](https://github.com/agblox/github-reusable-workflows/commit/c8a64910352b8ca07fc33eadfac6b43df828d9b1))
+
+## v0.3.0 (2022-04-11)
+### Feature
+* Add pre-commit shared workflow for unit tests ([`be3da53`](https://github.com/agblox/github-reusable-workflows/commit/be3da53531a35bd21beb3004da737bf6c28da1df))
+* Add pre-commit shared workflow for terraform modules ([`fff4901`](https://github.com/agblox/github-reusable-workflows/commit/fff4901ba8f756f7e871937abfa30e931b6a0bad))
+
 ## v0.2.0 (2022-04-07)
 ### Feature
 * Add status-to-slack shared workflow ([`30f6538`](https://github.com/agblox/github-reusable-workflows/commit/30f65387477d27ab6fd9559fe13d3f6e4916d8e5))
