@@ -23,6 +23,14 @@ on:
         description: Add machine user SSH key if true
         required: false
         type: boolean
+      ecr-regestry:
+        description: Docker image registry
+        required: false
+        type: string
+      ecr-repo:
+        description: Docker image name
+        required: false
+        type: string
     secrets:
       ssh-key:
         description: Machine user SSH key
@@ -66,4 +74,7 @@ jobs:
         uses: coroo/pytest-coverage-commentator@v1.0.2
       - name: Run integration tests
         if: inputs.run-integration
+        env:
+          ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+          ECR_REPO: ${{ inputs.ecr-repo }}
         run: make test-integration
