@@ -18,7 +18,7 @@ on:
         description: Run integration tests if true
         required: false
         type: boolean
-      with-ssh-key:
+      ssh-key:
         default: false
         description: Add machine user SSH key if true
         required: false
@@ -59,7 +59,7 @@ jobs:
             .venv
           key: poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install machine user SSH key
-        if: ${{ inputs.with-ssh-key == true }}
+        if: inputs.ssh-key
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
@@ -68,10 +68,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: make bootstrap
       - name: Run unit tests
-        if: ${{ inputs.run-unit == true}}
+        if: inputs.run-unit
         run: make test
-      - name: Comment coverage
-        if: ${{ inputs.run-unit == true}}
+      - name: Add coverage comment to PR
+        if: inputs.run-unit
         uses: coroo/pytest-coverage-commentator@v1.0.2
       - name: Run integration tests
         if: ${{ inputs.run-integration == true}}

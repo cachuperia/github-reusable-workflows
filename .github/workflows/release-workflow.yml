@@ -4,8 +4,8 @@ on:
   workflow_call:
     secrets:
       token:
-        description: 'GitHub token'
-        required: false
+        description: 'Machine user GitHub token'
+        required: true
 
 jobs:
   commitlint:

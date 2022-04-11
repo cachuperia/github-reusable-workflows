@@ -19,15 +19,15 @@ jobs:
     secrets:
       token: ${{ secrets.ORG_MACHINE_USER_TOKEN }}
 
-  debug-default:
-    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
-
-  debug-false:
-    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
-    with:
-      flag: false
-
-  debug-true:
-    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
-    with:
-      flag: true
+#  debug-default:
+#    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
+#
+#  debug-false:
+#    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
+#    with:
+#      flag: false
+#
+#  debug-true:
+#    uses: agblox/github-reusable-workflows/.github/workflows/debug.yml@DD-590-fix
+#    with:
+#      flag: true
