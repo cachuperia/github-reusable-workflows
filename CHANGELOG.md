@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.3 (2022-04-11)
+### Fix
+* Defaults ([`1f07f93`](https://github.com/agblox/github-reusable-workflows/commit/1f07f93f7a17a61e9c3d60032f2174b67e977f99))
+
+### Documentation
+* Update list of shared workflows ([`eaa8d35`](https://github.com/agblox/github-reusable-workflows/commit/eaa8d3542af60c0183843bc4e8bb51024e1b72a6))
+
 ## v0.4.2 (2022-04-11)
 ### Fix
 * Pytest workflow ([`1bc4876`](https://github.com/agblox/github-reusable-workflows/commit/1bc4876d3f0bf0664f7d13ec6f8e021a93bf9ada))
