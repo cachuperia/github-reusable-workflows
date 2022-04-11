@@ -8,6 +8,11 @@ on:
         default: '3.8'
         required: false
         type: string
+      with-asdf:
+        description: Install asdf and plugins if true
+        default: false
+        required: false
+        type: string
 
 jobs:
   pre-commit:
@@ -18,6 +23,23 @@ jobs:
       SKIP: no-commit-to-branch
     steps:
       - uses: actions/checkout@v2
+      - uses: asdf-vm/actions/setup@v1
+        if: ${{ inputs.with-asdf }}
+      - name: Install asdf plugins
+        if: ${{ inputs.with-asdf }}
+        run: |
+          asdf plugin-add github-cli https://github.com/bartlomiejdanek/asdf-github-cli.git
+          asdf plugin-add terraform https://github.com/asdf-community/asdf-hashicorp.git
+          asdf plugin-add terragrunt https://github.com/ohmer/asdf-terragrunt
+          asdf plugin-add terraform-docs https://github.com/looztra/asdf-terraform-docs
+          asdf plugin-add tflint https://github.com/skyzyx/asdf-tflint
+          asdf plugin-add sops https://github.com/feniix/asdf-sops.git
+          asdf install
+          asdf current
+      - name: Init tflint
+        if: ${{ inputs.with-asdf }}
+        shell: bash
+        run: tflint --init
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ inputs.python-version }}
