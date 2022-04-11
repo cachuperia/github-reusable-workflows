@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2022-04-11)
+### Fix
+* Defaults ([`1ae48ed`](https://github.com/agblox/github-reusable-workflows/commit/1ae48edcbcb9c310dc47df5b662572a8a94ae687))
+* Inputs ([`f13d36c`](https://github.com/agblox/github-reusable-workflows/commit/f13d36c16612824e4f618ec57d810f5266839640))
+
 ## v0.4.0 (2022-04-11)
 ### Feature
 * Add publish docker image workflow ([`89b0048`](https://github.com/agblox/github-reusable-workflows/commit/89b00488a557dd36bcbe1ab3808580fcb5cbbce9))
