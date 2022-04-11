@@ -1,0 +1,67 @@
+name: publish-docker
+
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        default: us-east-1
+        description: AWS default region
+        required: false
+        type: string
+      aws-role:
+        description: AWS IAM role to asume
+        required: true
+        type: string
+      with-ssh-key:
+        default: false
+        description: Add machine user SSH key if true
+        required: false
+        type: boolean
+      ecr-regestry:
+        description: Docker image registry
+        required: true
+        type: string
+      ecr-repo:
+        description: Docker image name
+        required: true
+        type: string
+    secrets:
+      ssh-key:
+        description: Machine user GitHub SSH key
+        required: false
+      aws-access-key:
+        description: Machine user AWS access key
+        required: true
+      aws-secret-key:
+        description: Machine user AWS access key
+        required: true
+
+jobs:
+  push-image:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+      ECR_REPO: ${{ inputs.ecr-repo }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install machine user SSH key
+        if: inputs.with-ssh-key
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: |
+            ${{ secrets.ssh-key }}
+      - name: Build docker image
+        run: make build
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key }}
+          aws-secret-access-key: ${{ secrets.aws-secret-key }}
+          aws-region: ${{ inputs.aws-region }}
+          role-to-assume: ${{ inputs.aws-role }}
+          role-duration-seconds: 900
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Push Image to Amazon ECR
+        run: make push

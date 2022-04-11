@@ -1,0 +1,80 @@
+name: pytest
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        default: '3.8'
+        description: Python runtime version
+        required: false
+        type: string
+      run-unit:
+        default: true
+        description: Run unit tests if true
+        required: false
+        type: boolean
+      run-integration:
+        default: false
+        description: Run integration tests if true
+        required: false
+        type: boolean
+      with-ssh-key:
+        default: false
+        description: Add machine user SSH key if true
+        required: false
+        type: boolean
+      ecr-regestry:
+        description: Docker image registry
+        required: false
+        type: string
+      ecr-repo:
+        description: Docker image name
+        required: false
+        type: string
+    secrets:
+      ssh-key:
+        description: Machine user GitHub SSH key
+        required: false
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    name: Run tests
+    steps:
+      - name: Set up Python ${{ inputs.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ inputs.python-version }}
+      - uses: actions/checkout@v2
+      - name: Install poetry
+        run: pip install poetry
+      - name: Configure poetry
+        shell: bash
+        run: poetry config virtualenvs.in-project true
+      - name: Set up poetry cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            .venv
+          key: poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install machine user SSH key
+        if: inputs.with-ssh-key
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: |
+            ${{ secrets.ssh-key }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: make bootstrap
+      - name: Run unit tests
+        if: inputs.run-unit
+        run: make test
+      - name: Comment coverage
+        uses: coroo/pytest-coverage-commentator@v1.0.2
+      - name: Run integration tests
+        if: inputs.run-integration
+        env:
+          ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+          ECR_REPO: ${{ inputs.ecr-repo }}
+        run: make test-integration
