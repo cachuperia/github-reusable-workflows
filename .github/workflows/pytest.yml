@@ -1,4 +1,4 @@
-name: pre-commit
+name: pytest
 
 on:
   workflow_call:
@@ -33,7 +33,7 @@ on:
         type: string
     secrets:
       ssh-key:
-        description: Machine user SSH key
+        description: Machine user GitHub SSH key
         required: false
 
 jobs:
