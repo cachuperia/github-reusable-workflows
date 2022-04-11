@@ -16,9 +16,9 @@
 Shared GitHub workflows. Inspired by [Musings on GitHub Actions Reusable Workflows](https://colinsalmcorner.com/musings-on-reusable-workflows/)
 - `approve.yml` Approve by machine user.
 - `commitlint.yml` Check commit messages.
-- `pre-commit.yml` `pre-commit` without additional tools.
-- `pre-commit-terraform-module.yml`: `pre-commit`, `terraform`, `terraform-docs` and `tflint`.
-- `pytest-unit.yml` Run unit tests.
+- `pre-commit.yml` Run `pre-commit`.
+- `publish-docker.yml` Build and push Docker image
+- `pytest.yml` Run tests.
 - `release-workflow.yml` Publish release.
 - `status-to-slack.yml` Send workflow status to `slack`.
 
