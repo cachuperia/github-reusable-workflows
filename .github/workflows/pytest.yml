@@ -4,10 +4,25 @@ on:
   workflow_call:
     inputs:
       python-version:
-        description: 'Python runtime version'
         default: '3.8'
+        description: Python runtime version
         required: false
         type: string
+      run-unit:
+        default: true
+        description: Run unit tests if true
+        required: false
+        type: boolean
+      run-integration:
+        default: false
+        description: Run integration tests if true
+        required: false
+        type: boolean
+      with-ssh-key:
+        default: false
+        description: Add machine user SSH key if true
+        required: false
+        type: boolean
 
 jobs:
   pytest:
@@ -30,11 +45,21 @@ jobs:
         with:
           path: |
             .venv
-          key: poetry-${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install machine user SSH key
+        if: inputs.with-ssh-key
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: |
+            ${{ secrets.ORG_MACHINE_USER_SSH }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: make bootstrap
       - name: Run unit tests
+        if: inputs.run-unit
         run: make test
       - name: Comment coverage
         uses: coroo/pytest-coverage-commentator@v1.0.2
+      - name: Run integration tests
+        if: inputs.run-integration
+        run: make test-integration
