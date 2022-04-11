@@ -4,13 +4,13 @@ on:
   workflow_call:
     inputs:
       python-version:
-        description: 'Python runtime version'
         default: '3.8'
+        description: 'Python runtime version'
         required: false
         type: string
       with-asdf:
-        description: Install asdf and plugins if true
         default: false
+        description: Install asdf and plugins if true
         required: false
         type: string
 
@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: asdf-vm/actions/setup@v1
-        if: ${{ inputs.with-asdf }}
+        if: ${{ inputs.with-asdf == true }}
       - name: Install asdf plugins
-        if: ${{ inputs.with-asdf }}
+        if: ${{ inputs.with-asdf == true }}
         run: |
           asdf plugin-add github-cli https://github.com/bartlomiejdanek/asdf-github-cli.git
           asdf plugin-add terraform https://github.com/asdf-community/asdf-hashicorp.git
@@ -37,7 +37,7 @@ jobs:
           asdf install
           asdf current
       - name: Init tflint
-        if: ${{ inputs.with-asdf }}
+        if: ${{ inputs.with-asdf == true }}
         shell: bash
         run: tflint --init
       - uses: actions/setup-python@v2

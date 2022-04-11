@@ -3,18 +3,18 @@ on:
 
 jobs:
   pre-commit:
-    uses: agblox/github-reusable-workflows/.github/workflows/pre-commit.yml@v0.2.0
+    uses: agblox/github-reusable-workflows/.github/workflows/pre-commit.yml@DD-590-fixes
     with:
       python-version: "3.10.2"
 
   commitlint:
-    uses: agblox/github-reusable-workflows/.github/workflows/commitlint.yml@v0.2.0
+    uses: agblox/github-reusable-workflows/.github/workflows/commitlint.yml@v0.4.0
 
   approve:
     if: ${{ success() }}
     needs:
       - pre-commit
       - commitlint
-    uses: agblox/github-reusable-workflows/.github/workflows/approve.yml@v0.2.0
+    uses: agblox/github-reusable-workflows/.github/workflows/approve.yml@v0.4.0
     secrets:
       token: ${{ secrets.ORG_MACHINE_USER_TOKEN }}

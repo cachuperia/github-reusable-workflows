@@ -59,7 +59,7 @@ jobs:
             .venv
           key: poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install machine user SSH key
-        if: inputs.with-ssh-key
+        if: ${{ inputs.with-ssh-key == true }}
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
@@ -68,12 +68,13 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: make bootstrap
       - name: Run unit tests
-        if: inputs.run-unit
+        if: ${{ inputs.run-unit = true}}
         run: make test
       - name: Comment coverage
+        if: ${{ inputs.run-unit = true}}
         uses: coroo/pytest-coverage-commentator@v1.0.2
       - name: Run integration tests
-        if: inputs.run-integration
+        if: ${{ inputs.run-integration = true}}
         env:
           ECR_REGISTRY: ${{ inputs.ecr-regestry }}
           ECR_REPO: ${{ inputs.ecr-repo }}

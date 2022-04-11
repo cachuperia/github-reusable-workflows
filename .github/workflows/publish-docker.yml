@@ -12,11 +12,6 @@ on:
         description: AWS IAM role to asume
         required: true
         type: string
-      with-ssh-key:
-        default: false
-        description: Add machine user SSH key if true
-        required: false
-        type: boolean
       ecr-regestry:
         description: Docker image registry
         required: true
@@ -25,16 +20,21 @@ on:
         description: Docker image name
         required: true
         type: string
-    secrets:
-      ssh-key:
-        description: Machine user GitHub SSH key
+      with-ssh-key:
+        default: false
+        description: Add machine user SSH key if true
         required: false
+        type: boolean
+    secrets:
       aws-access-key:
         description: Machine user AWS access key
         required: true
       aws-secret-key:
         description: Machine user AWS access key
         required: true
+      ssh-key:
+        description: Machine user GitHub SSH key
+        required: false
 
 jobs:
   push-image:
@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install machine user SSH key
-        if: inputs.with-ssh-key
+        if: ${{ inputs.with-ssh-key == true }}
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
