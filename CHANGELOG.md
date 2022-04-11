@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.2 (2022-04-11)
+### Fix
+* Pytest workflow ([`1bc4876`](https://github.com/agblox/github-reusable-workflows/commit/1bc4876d3f0bf0664f7d13ec6f8e021a93bf9ada))
+
 ## v0.4.1 (2022-04-11)
 ### Fix
 * Defaults ([`1ae48ed`](https://github.com/agblox/github-reusable-workflows/commit/1ae48edcbcb9c310dc47df5b662572a8a94ae687))
