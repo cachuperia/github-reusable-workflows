@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install machine user SSH key
-        if: inputs.with-ssh-key
+        if: ${{ inputs.with-ssh-key == true }}
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
