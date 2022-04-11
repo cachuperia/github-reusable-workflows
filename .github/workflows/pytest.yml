@@ -23,6 +23,10 @@ on:
         description: Add machine user SSH key if true
         required: false
         type: boolean
+    secrets:
+      ssh-key:
+        description: Machine user SSH key
+        required: false
 
 jobs:
   pytest:
@@ -51,7 +55,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
-            ${{ secrets.ORG_MACHINE_USER_SSH }}
+            ${{ secrets.ssh-key }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: make bootstrap
