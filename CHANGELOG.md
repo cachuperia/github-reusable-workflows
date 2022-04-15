@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.0 (2022-04-15)
+### Fix
+* Description style ([`137fb76`](https://github.com/agblox/github-reusable-workflows/commit/137fb765f63f2627901cde0ec68f2163361ebbf5))
+
+### Breaking
+* description style ([`137fb76`](https://github.com/agblox/github-reusable-workflows/commit/137fb765f63f2627901cde0ec68f2163361ebbf5))
+
 ## v0.4.3 (2022-04-11)
 ### Fix
 * Defaults ([`1f07f93`](https://github.com/agblox/github-reusable-workflows/commit/1f07f93f7a17a61e9c3d60032f2174b67e977f99))
