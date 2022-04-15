@@ -4,7 +4,7 @@ on:
   workflow_call:
     secrets:
       slack-webhook:
-        description: 'Slack channel webhook'
+        description: Slack channel webhook
         required: true
 
 jobs:
