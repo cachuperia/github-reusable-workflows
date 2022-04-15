@@ -14,11 +14,16 @@
 ## About
 
 Shared GitHub workflows. Inspired by [Musings on GitHub Actions Reusable Workflows](https://colinsalmcorner.com/musings-on-reusable-workflows/)
+
+### Available workflows
+
+Pay attention, if `inputs.asdf == true`, `Makefile` target `asdf` will be called for plugins setup.
+
 - `approve.yml` Approve by machine user.
 - `commitlint.yml` Check commit messages.
 - `pre-commit.yml` Run `pre-commit`.
-- `publish-docker.yml` Build and push Docker image
-- `pytest.yml` Run tests.
+- `publish.yml` Push artifacts to the storage(ECR or S3). Makefile target - `push-artifacts`.
+- `pytest.yml` Run tests. `Makefile` targets - `test` and `test-integration`.
 - `release-workflow.yml` Publish release.
 - `status-to-slack.yml` Send workflow status to `slack`.
 

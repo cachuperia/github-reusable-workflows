@@ -1,4 +1,4 @@
-name: publish-docker
+name: publish
 
 on:
   workflow_call:
@@ -9,22 +9,26 @@ on:
         required: false
         type: string
       aws-role:
-        description: AWS IAM role to asume
+        description: AWS IAM role to assume
         required: true
         type: string
+      asdf:
+        default: false
+        description: Install asdf and plugins if true
+        required: false
+        type: boolean
       ecr-regestry:
         description: Docker image registry
-        required: true
+        required: false
         type: string
       ecr-repo:
         description: Docker image name
-        required: true
-        type: string
-      with-ssh-key:
-        default: false
-        description: Add machine user SSH key if true
         required: false
-        type: boolean
+        type: string
+      s3-bucket:
+        description: S3 bucket name
+        required: false
+        type: string
     secrets:
       aws-access-key:
         description: Machine user AWS access key
@@ -35,24 +39,30 @@ on:
       ssh-key:
         description: Machine user GitHub SSH key
         required: false
+      token:
+        description: Machine user GitHub token
+        required: false
 
 jobs:
-  push-image:
-    timeout-minutes: 15
+  publish:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
-    env:
-      ECR_REGISTRY: ${{ inputs.ecr-regestry }}
-      ECR_REPO: ${{ inputs.ecr-repo }}
     steps:
       - uses: actions/checkout@v2
+      - name: Install asdf
+        uses: asdf-vm/actions/setup@v1
+        if: inputs.asdf
+      - name: Install asdf plugins
+        if: inputs.asdf
+        run: make asdf
       - name: Install machine user SSH key
-        if: ${{ inputs.with-ssh-key == true }}
+        env:
+          SSH_KEY: ${{ secrets.ssh-key }}
+        if: env.SSH_KEY != null
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
             ${{ secrets.ssh-key }}
-      - name: Build docker image
-        run: make build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -62,6 +72,12 @@ jobs:
           role-to-assume: ${{ inputs.aws-role }}
           role-duration-seconds: 900
       - name: Login to Amazon ECR
+        if: ${{ inputs.ecr == true }}
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Push Image to Amazon ECR
-        run: make push
+      - name: Push to the artifactory
+        env:
+          ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+          ECR_REPO: ${{ inputs.ecr-repo }}
+          S3_BUCKET: ${{ inputs.s3-bucket }}
+          GITHUB_TOKEN: ${{ secrets.token }}
+        run: make push-artifacts

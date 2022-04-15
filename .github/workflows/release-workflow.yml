@@ -2,20 +2,55 @@ name: release
 
 on:
   workflow_call:
+    inputs:
+      asdf:
+        default: false
+        description: Install asdf and plugins if true
+        required: false
+        type: boolean
+      python-version:
+        default: '3.8'
+        description: Python runtime version
+        required: false
+        type: string
     secrets:
       token:
-        description: 'Machine user GitHub token'
+        description: Machine user GitHub token
         required: true
+      ssh-key:
+        description: Machine user GitHub SSH key
+        required: false
 
 jobs:
-  commitlint:
+  release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
         token: ${{ secrets.token }}
-    - name: Python Semantic Release
-      uses: relekang/python-semantic-release@master
+    - name: Install asdf
+      uses: asdf-vm/actions/setup@v1
+      if: inputs.asdf
+    - name: Install asdf plugins
+      if: inputs.asdf
+      run: make asdf
+    - uses: actions/setup-python@v2
       with:
-        github_token: ${{ secrets.token }}
+        python-version: ${{ inputs.python-version }}
+    - name: Install machine user SSH key
+      env:
+        SSH_KEY: ${{ secrets.ssh-key }}
+      if: env.SSH_KEY != null
+      uses: webfactory/ssh-agent@v0.5.2
+      with:
+        ssh-private-key: |
+          ${{ secrets.ssh-key }}
+    - name: Run semantic-release
+      env:
+        GH_TOKEN: ${{ secrets.token }}
+      run: |
+        pip install python-semantic-release poetry
+        git config --global user.name "github-actions"
+        git config --global user.email "action@github.com"
+        semantic-release publish -v DEBUG -D commit_author="github-actions <action@github.com>"

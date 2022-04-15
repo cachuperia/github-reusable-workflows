@@ -18,11 +18,6 @@ on:
         description: Run integration tests if true
         required: false
         type: boolean
-      ssh-key:
-        default: false
-        description: Add machine user SSH key if true
-        required: false
-        type: boolean
       ecr-regestry:
         description: Docker image registry
         required: false
@@ -59,7 +54,9 @@ jobs:
             .venv
           key: poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install machine user SSH key
-        if: inputs.ssh-key
+        env:
+          SSH_KEY: ${{ secrets.ssh-key }}
+        if: env.SSH_KEY != null
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |

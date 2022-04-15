@@ -5,7 +5,7 @@ on:
     secrets:
       slack-webhook:
         description: 'Slack channel webhook'
-        required: false
+        required: true
 
 jobs:
   send-workflow-status:
