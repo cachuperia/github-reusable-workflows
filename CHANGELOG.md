@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.1 (2022-04-18)
+### Fix
+* Inputs names and login to ECR condition ([`5aa4cd6`](https://github.com/agblox/github-reusable-workflows/commit/5aa4cd66650ff8027c3ea4d17453c9e7e231717d))
+
 ## v1.0.0 (2022-04-15)
 ### Fix
 * Description style ([`137fb76`](https://github.com/agblox/github-reusable-workflows/commit/137fb765f63f2627901cde0ec68f2163361ebbf5))
