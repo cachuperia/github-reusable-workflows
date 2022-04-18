@@ -18,7 +18,7 @@ on:
         description: Run integration tests if true
         required: false
         type: boolean
-      ecr-regestry:
+      ecr-registry:
         description: Docker image registry
         required: false
         type: string
@@ -73,6 +73,6 @@ jobs:
       - name: Run integration tests
         if: ${{ inputs.run-integration == true}}
         env:
-          ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+          ECR_REGISTRY: ${{ inputs.ecr-registry }}
           ECR_REPO: ${{ inputs.ecr-repo }}
         run: make test-integration
