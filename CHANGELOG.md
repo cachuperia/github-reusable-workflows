@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.1 (2022-04-23)
+### Fix
+* **ci:** Release token name ([`b83e895`](https://github.com/cachuperia/github-reusable-workflows/commit/b83e895d86a410d6f3ab5521ec9f51b22a8ae140))
+* Machine user and secrets names ([`48238f9`](https://github.com/cachuperia/github-reusable-workflows/commit/48238f98cabedd6ff14215618cf7d5ca65bb296f))
+
 ## v1.0.0 (2022-04-15)
 ### Fix
 * Description style ([`137fb76`](https://github.com/agblox/github-reusable-workflows/commit/137fb765f63f2627901cde0ec68f2163361ebbf5))
