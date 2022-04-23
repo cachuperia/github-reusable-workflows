@@ -17,7 +17,7 @@ on:
         description: Install asdf and plugins if true
         required: false
         type: boolean
-      ecr-regestry:
+      ecr-registry:
         description: Docker image registry
         required: false
         type: string
@@ -72,11 +72,13 @@ jobs:
           role-to-assume: ${{ inputs.aws-role }}
           role-duration-seconds: 900
       - name: Login to Amazon ECR
-        if: ${{ inputs.ecr == true }}
+        env:
+          ECR_REGISTRY: ${{ inputs.ecr-registry }}
+        if: env.ECR_REGISTRY
         uses: aws-actions/amazon-ecr-login@v1
       - name: Push to the artifactory
         env:
-          ECR_REGISTRY: ${{ inputs.ecr-regestry }}
+          ECR_REGISTRY: ${{ inputs.ecr-registry }}
           ECR_REPO: ${{ inputs.ecr-repo }}
           S3_BUCKET: ${{ inputs.s3-bucket }}
           GITHUB_TOKEN: ${{ secrets.token }}
