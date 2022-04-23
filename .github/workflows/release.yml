@@ -10,4 +10,4 @@ jobs:
   release:
     uses: cachuperia/github-reusable-workflows/.github/workflows/release-workflow.yml@v1.0.0
     secrets:
-      token: ${{ secrets.ORG_MACHINE_USER_TOKEN }}
+      token: ${{ secrets.AUTOMATION_GITHUB_TOKEN  }}
