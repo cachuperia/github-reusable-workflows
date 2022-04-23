@@ -2,9 +2,10 @@
 
 <!--next-version-placeholder-->
 
-## v1.0.1 (2022-04-18)
+## v1.0.1 (2022-04-23)
 ### Fix
-* Inputs names and login to ECR condition ([`5aa4cd6`](https://github.com/agblox/github-reusable-workflows/commit/5aa4cd66650ff8027c3ea4d17453c9e7e231717d))
+* **ci:** Release token name ([`b83e895`](https://github.com/cachuperia/github-reusable-workflows/commit/b83e895d86a410d6f3ab5521ec9f51b22a8ae140))
+* Machine user and secrets names ([`48238f9`](https://github.com/cachuperia/github-reusable-workflows/commit/48238f98cabedd6ff14215618cf7d5ca65bb296f))
 
 ## v1.0.0 (2022-04-15)
 ### Fix

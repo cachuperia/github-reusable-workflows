@@ -2,10 +2,12 @@ SHELL = /bin/bash
 .DEFAULT_GOAL = help
 
 ##@ Bootstrap
-.PHONY: repo-init
+.PHONY: repo-init init
 
 repo-init:  ## Install pre-commit in repo
 	pre-commit install -t pre-commit -t commit-msg
+
+init: repo-init  ## All Init steps at once
 
 ##@ Checks
 .PHONY: check
