@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.2 (2022-04-23)
+
+
 ## v1.0.1 (2022-04-23)
 ### Fix
 * **ci:** Release token name ([`b83e895`](https://github.com/cachuperia/github-reusable-workflows/commit/b83e895d86a410d6f3ab5521ec9f51b22a8ae140))
