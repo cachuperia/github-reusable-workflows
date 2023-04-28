@@ -2,6 +2,12 @@ name: status-to-slack
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        default: '18.16.0'
+        description: Node runtime version
+        required: false
+        type: string
     secrets:
       slack-webhook:
         description: Slack channel webhook
@@ -17,3 +23,7 @@ jobs:
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           slack_webhook_url: ${{secrets.slack-webhook}}
+      - name: Set up Node ${{ inputs.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ inputs.node-version }}

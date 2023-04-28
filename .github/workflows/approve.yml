@@ -2,6 +2,12 @@ name: approve
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        default: '18.16.0'
+        description: Node runtime version
+        required: false
+        type: string
     secrets:
       token:
         description: 'GitHub token'
@@ -13,6 +19,10 @@ jobs:
     name: Approve PR if all required checks passed
     timeout-minutes: 5
     steps:
-      - uses: hmarr/auto-approve-action@v2
+      - name: Set up Node ${{ inputs.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ inputs.node-version }}
+      - uses: hmarr/auto-approve-action@v3.2.1
         with:
           github-token: ${{ secrets.token }}

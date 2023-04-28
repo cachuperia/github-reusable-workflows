@@ -25,6 +25,11 @@ on:
         description: Docker image name
         required: false
         type: string
+      node-version:
+        default: '18.16.0'
+        description: Node runtime version
+        required: false
+        type: string
       s3-bucket:
         description: S3 bucket name
         required: false
@@ -48,9 +53,13 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Set up Node ${{ inputs.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ inputs.node-version }}
+      - uses: actions/checkout@v3.5.2
       - name: Install asdf
-        uses: asdf-vm/actions/setup@v1
+        uses: asdf-vm/actions/setup@v2.1.0
         if: inputs.asdf
       - name: Install asdf plugins
         if: inputs.asdf
@@ -59,12 +68,12 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.ssh-key }}
         if: env.SSH_KEY != null
-        uses: webfactory/ssh-agent@v0.5.2
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: |
             ${{ secrets.ssh-key }}
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2.0.0
         with:
           aws-access-key-id: ${{ secrets.aws-access-key }}
           aws-secret-access-key: ${{ secrets.aws-secret-key }}
@@ -75,7 +84,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ inputs.ecr-registry }}
         if: env.ECR_REGISTRY
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v1.6.0
       - name: Push to the artifactory
         env:
           ECR_REGISTRY: ${{ inputs.ecr-registry }}
