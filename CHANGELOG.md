@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.0 (2023-04-28)
+### Feature
+* Update dependencies and defaults ([`539c816`](https://github.com/cachuperia/github-reusable-workflows/commit/539c8165d6c2f88ae64475792a64d5c6340157a5))
+
+### Documentation
+* Clean-up ([`a128b3d`](https://github.com/cachuperia/github-reusable-workflows/commit/a128b3d9224c6514864b53095c4e236590b1de07))
+
 ## v1.0.2 (2022-04-23)
 
 
