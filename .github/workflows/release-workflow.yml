@@ -8,8 +8,13 @@ on:
         description: Install asdf and plugins if true
         required: false
         type: boolean
+      node-version:
+        default: '18.16.0'
+        description: Node runtime version
+        required: false
+        type: string
       python-version:
-        default: '3.8'
+        default: '3.10'
         description: Python runtime version
         required: false
         type: string
@@ -25,32 +30,36 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.token }}
-    - name: Install asdf
-      uses: asdf-vm/actions/setup@v1
-      if: inputs.asdf
-    - name: Install asdf plugins
-      if: inputs.asdf
-      run: make asdf
-    - uses: actions/setup-python@v2
-      with:
-        python-version: ${{ inputs.python-version }}
-    - name: Install machine user SSH key
-      env:
-        SSH_KEY: ${{ secrets.ssh-key }}
-      if: env.SSH_KEY != null
-      uses: webfactory/ssh-agent@v0.5.2
-      with:
-        ssh-private-key: |
-          ${{ secrets.ssh-key }}
-    - name: Run semantic-release
-      env:
-        GH_TOKEN: ${{ secrets.token }}
-      run: |
-        pip install python-semantic-release poetry
-        git config --global user.name "github-actions"
-        git config --global user.email "action@github.com"
-        semantic-release publish -v DEBUG -D commit_author="github-actions <action@github.com>"
+      - name: Set up Node ${{ inputs.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ inputs.node-version }}
+      - uses: actions/setup-python@v4.6.0
+        with:
+          python-version: ${{ inputs.python-version }}
+      - uses: actions/checkout@v3.5.2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.token }}
+      - name: Install asdf
+        uses: asdf-vm/actions/setup@v2.1.0
+        if: inputs.asdf
+      - name: Install asdf plugins
+        if: inputs.asdf
+        run: make asdf
+      - name: Install machine user SSH key
+        env:
+          SSH_KEY: ${{ secrets.ssh-key }}
+        if: env.SSH_KEY != null
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.ssh-key }}
+      - name: Run semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.token }}
+        run: |
+          pip install poetry python-semantic-release==7.33.3
+          git config --global user.name "github-actions"
+          git config --global user.email "action@github.com"
+          semantic-release publish -v DEBUG -D commit_author="github-actions <action@github.com>"

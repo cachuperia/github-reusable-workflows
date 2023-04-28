@@ -2,6 +2,12 @@ name: commitlint
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        default: '18.16.0'
+        description: Node runtime version
+        required: false
+        type: string
 
 jobs:
   commitlint:
@@ -9,13 +15,14 @@ jobs:
     name: Check PR commit messages with commitlint
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v2
+      - name: Set up Node ${{ inputs.node-version }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ inputs.node-version }}
+      - uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
       - run: npm install commitlint-plugin-function-rules
-      - uses: wagoid/commitlint-github-action@v3
+      - uses: wagoid/commitlint-github-action@v5.4.1
         env:
           NODE_PATH: ${{ github.workspace }}/node_modules

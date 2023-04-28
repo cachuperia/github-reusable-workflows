@@ -1,14 +1,12 @@
 # github-reusable-workflows
 
-![checks][checks] ![release][release]
+![checks][ch] ![release][r]
 
 ## Table of contents
 * [About](#about)
 * [Prerequisites](#prerequisites)
 * [Usage](#usage)
-* [Build](#build)
-* [Deploy](#deploy)
-* [Test](#test)
+* [CD/CI](#cdci)
 * [Contribute](#contribute)
 
 ## About
@@ -43,13 +41,10 @@ Run `make` for list all available targets.
 - `cd github-reusable-workflows`
 - `make init`
 
-## Build
+## CD/CI
 
-Release GitHub [workflow](.github/workflows/release.yml). Release commit types: `fix`, `feat`.
-
-## Deploy
-
-## Test
+- `check` GitHub [workflow][wch].
+- `release` GitHub [workflow][wr]. Release commit types: `fix`, `feat`.
 
 ## Contribute
 
@@ -61,5 +56,8 @@ Commit message style - [Conventional Commits][cc].
 [cc]: https://www.conventionalcommits.org/en/v1.0.0/
 [ds]: https://github.com/Yelp/detect-secrets#installation
 
-[checks]: https://github.com/cachuperia/github-reusable-workflows/actions/workflows/checks.yml/badge.svg
-[release]: https://github.com/cachuperia/github-reusable-workflows/actions/workflows/release.yml/badge.svg
+[wch]: .github/workflows/checks.yml
+[wr]: .github/workflows/release.yml
+
+[ch]: https://github.com/cachuperia/github-reusable-workflows/actions/workflows/checks.yml/badge.svg
+[r]: https://github.com/cachuperia/github-reusable-workflows/actions/workflows/release.yml/badge.svg
